@@ -19,21 +19,21 @@ module tt_um_asiclab_example (
     wire reset = ~rst_n;
 
     // Set unused IOs to 0
-    assign uio_out = 8'b0;
-    assign uio_oe  = 8'b0;
+    assign uio_out = 0;
+    assign uio_oe  = 0;
 
     // Prevent unused signal warnings
-    wire _unused = &{ena, uio_in, clk, rst_n, 1'b0};
+    wire _unused = &{ena, uio_in, 1'b0};
 
     // Sequential logic for uo_out
     always @(posedge clk or posedge reset) begin
         if (reset) begin
-            uo_out <= 8'b0;
+            uo_out <= 0;
         end else begin
             // Lower 4 bits: sum of ui_in[7:4] and ui_in[3:0]
             // Upper 4 bits: sum of ui_in and uio_in
             uo_out[3:0] <= ui_in[7:4] + ui_in[3:0];
-            uo_out[7:4] <= (ui_in + uio_in)[7:4];
+            uo_out[7:4] <= 0;
         end
     end
 
